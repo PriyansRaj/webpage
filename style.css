@@ -116,9 +116,11 @@ body {
   align-self: flex-end;
 }
 .side-image img {
-  width: 220px;
+  width: 100%;
+  max-width: 260px;
   border-radius: 16px;
 }
+
 
 /* Polaroid */
 .polaroids {
@@ -319,5 +321,35 @@ img {
 
   .final-image-block img {
     max-height: 320px;
+  }
+}
+
+
+/* =====================
+   Mobile fix: Chat screen
+   ===================== */
+
+@media (max-width: 600px) {
+  .chat-mix {
+    gap: 16px;
+  }
+
+  .chat-container {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+
+  .bubble {
+    font-size: 0.9rem;
+    max-width: 90%;
+  }
+
+  .side-image {
+    display: flex;
+    justify-content: center;
+  }
+
+  .side-image img {
+    max-width: 220px;
   }
 }
