@@ -1,0 +1,323 @@
+:root {
+  --bg: #0e0e11;
+  --fg: #ffffff;
+  --muted: rgba(255, 255, 255, 0.6);
+  --accent: #ff4d8d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
+
+/* Scroll container */
+#story-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+#story-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Screens */
+.screen {
+  height: 100vh;
+  width: 100vw;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  position: relative;
+}
+
+/* Intro */
+.gf-name {
+  font-family: serif;
+  font-size: 3rem;
+}
+.tap-hint {
+  margin-top: 16px;
+  color: var(--muted);
+  animation: pulse 2s infinite;
+}
+
+/* Labels */
+.year-label {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* Collage (IG style) */
+.collage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.collage-grid img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+/* Strip (YT recap) */
+.strip-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+}
+.strip-row img {
+  width: 160px;
+  height: 240px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* Chat mix */
+.chat-mix {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.chat-container {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bubble {
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+}
+.recipient {
+  background: #1e1e24;
+  align-self: flex-start;
+}
+.sender {
+  background: var(--accent);
+  color: #000;
+  align-self: flex-end;
+}
+.side-image img {
+  width: 220px;
+  border-radius: 16px;
+}
+
+/* Polaroid */
+.polaroids {
+  position: relative;
+  height: 320px; /* was 260px */
+  margin-bottom: 24px;
+}
+
+.polaroids img {
+  position: absolute;
+  width: 180px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+.polaroids img:nth-child(1) {
+  transform: rotate(-6deg);
+  left: 0;
+}
+.polaroids img:nth-child(2) {
+  transform: rotate(4deg);
+  left: 40px;
+}
+.polaroids img:nth-child(3) {
+  transform: rotate(-2deg);
+  left: 80px;
+}
+
+/* Text */
+.caption,
+.story-text,
+.closing-paragraph {
+  margin-top: 20px;
+  color: var(--muted);
+  text-align: center;
+  max-width: 380px;
+}
+
+/* Final */
+.hny-text {
+  font-family: serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.firework-glow {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 77, 141, 0.25),
+    transparent 70%
+  );
+  filter: blur(40px);
+  animation: glow 6s infinite alternate;
+}
+
+/* Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.9s ease;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Progress */
+.progress-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 10;
+}
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+@keyframes glow {
+  from {
+    transform: translate(-30px, -30px);
+  }
+  to {
+    transform: translate(30px, 30px);
+  }
+}
+/* =====================
+   Image Lightbox
+   ===================== */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.lightbox img {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+  border-radius: 12px;
+  animation: zoomIn 0.3s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Make images feel tappable */
+img {
+  cursor: pointer;
+}
+/* =====================
+   New Year Countdown
+   ===================== */
+
+.countdown {
+  margin-top: 24px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.countdown span {
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* =====================
+   Final Screen Layout
+   ===================== */
+
+.final-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.final-text-block {
+  max-width: 520px;
+}
+
+.final-image-block img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+  .final-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .final-text-block {
+    margin: 0 auto;
+  }
+
+  .final-image-block img {
+    max-height: 320px;
+  }
+}
